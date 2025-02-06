@@ -5,5 +5,6 @@
  * @returns {number} - The sum of the numbers, or 0 for an empty string.
  */
 export function add(numbers: string): number {
-    return 0; // this should pass the first test
+    if (!numbers) return 0; // this will pass the first test case 
+    return Number(numbers); // this will pass the second test case
 }
