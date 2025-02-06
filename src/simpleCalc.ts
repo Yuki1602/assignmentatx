@@ -10,32 +10,38 @@ export function add(numbers: string): number {
   let delimiter = /,|\n/;  // Default delimiter (comma or newline)
   const negatives: number[] = [];  // To store negative numbers
   
-  // Check if a custom delimiter is defined
   if (numbers.startsWith("//")) {
     const delimiterEndIndex = numbers.indexOf("\n");
-    delimiter = new RegExp(numbers.slice(2, delimiterEndIndex).replace(/[\[\]]/g, '')); // Extract delimiter and remove square brackets
+    const delimiterPart = numbers.slice(2, delimiterEndIndex);
 
-    // Remove the custom delimiter line from the string
+    // Handle delimiters with brackets
+    if (delimiterPart.startsWith("[") && delimiterPart.endsWith("]")) {
+      const customDelimiter = delimiterPart.slice(1, -1);
+      delimiter = new RegExp(escapeRegExp(customDelimiter));
+    }
+    // Handle single-character delimiters without brackets
+    else {
+      delimiter = new RegExp(escapeRegExp(delimiterPart));
+    }
+
     numbers = numbers.slice(delimiterEndIndex + 1);
   }
 
   // Split the string by the determined delimiter and convert to numbers
   const numArray = numbers.split(delimiter).map(numStr => {
-    const num = Number(numStr);
-    
-    // Collect negative numbers
-    if (num < 0) {
-      negatives.push(num);
-    }
-    
+    const num = parseInt(numStr, 10);
+    if (num < 0) negatives.push(num);
     return num;
   });
 
-  // If there are negative numbers, throw an exception
   if (negatives.length > 0) {
     throw new Error(`negatives not allowed: ${negatives.join(", ")}`);
   }
 
-  // Return the sum of numbers less than or equal to 100
   return numArray.reduce((sum, num) => (num <= 1000 ? sum + num : sum), 0);
+}
+
+// Helper function to escape regex special characters
+function escapeRegExp(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
