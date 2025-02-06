@@ -6,5 +6,12 @@
  */
 export function add(numbers: string): number {
     if (!numbers) return 0; // this will pass the first test case 
-    return Number(numbers); // this will pass the second test case
+    const numArray = numbers.split(",").map(Number);
+    if (numArray.length === 1) {
+        return numArray[0];  // this will pass the second test case
+    }
+
+    if (numArray.length === 2) {
+        return numArray[0] + numArray[1];  // this will pass the third test case
+    }
 }
