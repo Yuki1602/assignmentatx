@@ -7,10 +7,5 @@
 export function add(numbers: string): number {
     if (!numbers) return 0; // this will pass the first test case 
     const numArray = numbers.split(",").map(Number);
-    let sum = 0;
-    for (let i = 0; i < numArray.length; i++) { // this will pass the rest of the test cases
-      sum += numArray[i];
-    }
-  
-    return sum;
+    return numArray.reduce((sum, num) => sum + num, 0); // this will pass the rest of the test cases
 }
