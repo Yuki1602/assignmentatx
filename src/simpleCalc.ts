@@ -6,6 +6,6 @@
  */
 export function add(numbers: string): number {
     if (!numbers) return 0; // this will pass the first test case 
-    const numArray = numbers.split(",").map(Number);
+    const numArray = numbers.split(/,|\n/).map(Number); // added | to split by newline
     return numArray.reduce((sum, num) => sum + num, 0); // this will pass the rest of the test cases
 }
