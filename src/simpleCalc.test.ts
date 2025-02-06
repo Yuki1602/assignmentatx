@@ -28,4 +28,8 @@ describe("Simple String Calculator", () => {
   test("should pass if function throws an exception for negative numbers", () => {
     expect(() => add("1,-2,3")).toThrowError("negatives not allowed: -2");
   });
+
+  test("should pass if function ignores numbers greater than 1000", () => {
+    expect(add("2,1001")).toBe(2);
+  });
 });
