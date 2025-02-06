@@ -14,13 +14,18 @@ export function add(numbers: string): number {
     const delimiterEndIndex = numbers.indexOf("\n");
     const delimiterPart = numbers.slice(2, delimiterEndIndex);
 
-    // Handle delimiters with brackets
+    // Handle delimiters enclosed in brackets (single or multiple)
     if (delimiterPart.startsWith("[") && delimiterPart.endsWith("]")) {
-      const customDelimiter = delimiterPart.slice(1, -1);
-      delimiter = new RegExp(escapeRegExp(customDelimiter));
-    }
-    // Handle single-character delimiters without brackets
-    else {
+      // Split into individual delimiters (e.g., "[*][%]" → ["*", "%"])
+      const delimiters = delimiterPart
+        .slice(1, -1) // Remove outer brackets
+        .split("]["); // Split into individual delimiters
+
+      // Escape each delimiter and join with | for regex
+      const escapedDelimiters = delimiters.map((d) => escapeRegExp(d));
+      delimiter = new RegExp(escapedDelimiters.join("|"));
+    } else {
+      // Handle single-character delimiter without brackets (e.g., "//;")
       delimiter = new RegExp(escapeRegExp(delimiterPart));
     }
 
