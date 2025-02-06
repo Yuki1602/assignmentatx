@@ -5,24 +5,21 @@
  * @returns {number} - The sum of the numbers, or 0 for an empty string.
  */
 export function add(numbers: string): number {
-    if (!numbers) return 0; // this will pass the first test case 
-    if (numbers.startsWith("//")) {
-        const delimiterLineEnd = numbers.indexOf("\n");
-        const delimiter = numbers.slice(2, delimiterLineEnd);
+  if (!numbers) return 0;  // Handle empty string case
+  
+  let delimiter = /,|\n/;
+  
+  // Check if a custom delimiter is defined
+  if (numbers.startsWith("//")) {
+    const delimiterEndIndex = numbers.indexOf("\n");
+    delimiter = new RegExp(numbers.slice(2, delimiterEndIndex).replace(/[\[\]]/g, '')); // Extract delimiter and remove square brackets
 
-        // Get the rest of the string after the newline
-        numbers = numbers.slice(delimiterLineEnd + 1);
-        
-        // Split the numbers using the custom delimiter
-        const numArray = numbers.split(delimiter).map(Number);
-        
-        // Use reduce to sum the numbers
-        return numArray.reduce((sum, num) => sum + num, 0);
-      }
-      
-      // Split by both comma and newline using a regular expression (default behavior)
-      const numArray = numbers.split(/[,|\n]/).map(Number);
-      
-      // Use reduce to sum the numbers
-      return numArray.reduce((sum, num) => sum + num, 0);
+    // Remove the custom delimiter line from the string
+    numbers = numbers.slice(delimiterEndIndex + 1);
+  }
+
+  // Split the string by the determined delimiter and convert to numbers
+  const numArray = numbers.split(delimiter).map(Number);
+
+  return numArray.reduce((sum, num) => sum + num, 0);
 }
