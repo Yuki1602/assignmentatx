@@ -41,4 +41,10 @@ describe("Simple String Calculator", () => {
     expect(add("//[*][%]\n1*2%3")).toBe(6);
     expect(add("//[**][%%]\n1**2%%3")).toBe(6);
   });
+
+  test("should handle multiple multi-character delimiters", () => {
+    expect(add("//[**][%%]\n1**2%%3")).toBe(6);
+    expect(add("//[!!][??]\n5!!3??2")).toBe(10);
+    expect(add("//[abc][def]\n1abc2def3")).toBe(6);
+  });
 });
