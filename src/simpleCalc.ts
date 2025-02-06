@@ -6,6 +6,23 @@
  */
 export function add(numbers: string): number {
     if (!numbers) return 0; // this will pass the first test case 
-    const numArray = numbers.split(/[,\n]/).map(Number); // added \n to the regex to handle newlines
-    return numArray.reduce((sum, num) => sum + num, 0); // this will pass the rest of the test cases
+    if (numbers.startsWith("//")) {
+        const delimiterLineEnd = numbers.indexOf("\n");
+        const delimiter = numbers.slice(2, delimiterLineEnd);
+
+        // Get the rest of the string after the newline
+        numbers = numbers.slice(delimiterLineEnd + 1);
+        
+        // Split the numbers using the custom delimiter
+        const numArray = numbers.split(delimiter).map(Number);
+        
+        // Use reduce to sum the numbers
+        return numArray.reduce((sum, num) => sum + num, 0);
+      }
+      
+      // Split by both comma and newline using a regular expression (default behavior)
+      const numArray = numbers.split(/[,|\n]/).map(Number);
+      
+      // Use reduce to sum the numbers
+      return numArray.reduce((sum, num) => sum + num, 0);
 }
