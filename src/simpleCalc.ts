@@ -36,6 +36,6 @@ export function add(numbers: string): number {
     throw new Error(`negatives not allowed: ${negatives.join(", ")}`);
   }
 
-
+  // Return the sum of numbers less than or equal to 100
   return numArray.reduce((sum, num) => (num <= 1000 ? sum + num : sum), 0);
 }
