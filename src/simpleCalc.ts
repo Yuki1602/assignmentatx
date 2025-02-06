@@ -37,5 +37,5 @@ export function add(numbers: string): number {
   }
 
 
-  return numArray.reduce((sum, num) => sum + num, 0);
+  return numArray.reduce((sum, num) => (num <= 1000 ? sum + num : sum), 0);
 }
