@@ -5,3 +5,8 @@ test("renders calculator title", () => {
   render(<App />);
   expect(screen.getByText(/String Calculator/i)).toBeInTheDocument();
 });
+
+test("renders input field", () => {
+  render(<App />);
+  expect(screen.getByPlaceholderText("Enter numbers...")).toBeInTheDocument();
+});
