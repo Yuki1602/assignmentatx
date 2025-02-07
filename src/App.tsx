@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
-import './App.css';
-import { add } from './simpleCalc';
+import { useState } from "react";
+import { add } from "./simpleCalc";
+import "./App.css";
 
-function App() {
+export default function App() {
   const [input, setInput] = useState("");
-
   const [result, setResult] = useState<string | number>("");
+
+  const getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
 
   const handleCalculate = () => {
     try {
       const sum = add(input);
       setResult(sum);
+      document.body.style.backgroundColor = getRandomColor(); // Change body background
     } catch (error) {
       setResult((error as Error).message);
     }
   };
+
   return (
     <div className="container">
       <h1>String Calculator</h1>
@@ -32,5 +42,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
