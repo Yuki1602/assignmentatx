@@ -13,6 +13,10 @@ function App() {
         onChange={(e) => setInput(e.target.value)}
         className="input-field"
       />
+      <button className="calculate-btn">
+        Calculate
+      </button>
+      <div className="result">Result:</div>
     </div>
   );
 }
